@@ -13,14 +13,23 @@
         <tbody *ngFor="let task of todaysTasks.items">
           <tr class="{{task.bleedOverCount == 0 ? 'table-default' : task.bleedOverCount > 1 ? 'table-danger' : 'table-warning'}}">
             <td><span *ngIf="task.bleedOverCount > 0">x{{ task.bleedOverCount }}</span></td>
-            <td><input type="checkbox" [checked]="task.completed"/></td>
+            <td>
+              <input type="checkbox"
+                     [checked]="task.completed"
+                     [(ngModel)]="task.completed"
+                     [ngModelOptions]="{standalone: true}"
+                     (ngModelChange)="updateTaskTallies()"/>
+            </td>
             <td>{{ task.name }}</td>
             <td>
-              <fa-icon [icon]="faEdit"></fa-icon>&nbsp;
-              <fa-icon [icon]="faTrashAlt"></fa-icon>
+              <fa-icon [icon]="faEdit" title="Edit"></fa-icon>&nbsp;
+              <fa-icon [icon]="faTrashAlt" title="Delete"></fa-icon>
             </td>
           </tr>
         </tbody>
+        <tfoot>
+          <td colspan="4">Total: {{ taskCount }} | Complete: {{ completeCount }}</td>
+        </tfoot>
       </table>
     </div>
   </form>
