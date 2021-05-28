@@ -4,9 +4,10 @@
       <table class="table table-responsive">
         <thead>
           <tr>
-            <th scope="col">Missed?</th>
+            <th scope="col">Miss</th>
             <th scope="col">Done</th>
             <th scope="col">Description</th>
+            <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody *ngFor="let task of todaysTasks.items">
@@ -14,6 +15,10 @@
             <td><span *ngIf="task.bleedOverCount > 0">x{{ task.bleedOverCount }}</span></td>
             <td><input type="checkbox" [checked]="task.completed"/></td>
             <td>{{ task.name }}</td>
+            <td>
+              <fa-icon [icon]="faEdit"></fa-icon>&nbsp;
+              <fa-icon [icon]="faTrashAlt"></fa-icon>
+            </td>
           </tr>
         </tbody>
       </table>

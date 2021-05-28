@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { TaskList } from './TaskList';
 
 @Component({
@@ -8,6 +9,8 @@ import { TaskList } from './TaskList';
 })
 export class TodaysTasksComponent implements OnInit {
 
+  faEdit = faEdit;
+  faTrashAlt = faTrashAlt;
   todaysTasks: TaskList = {
     "day": new Date(),
     "name": Date.now.toString(),
