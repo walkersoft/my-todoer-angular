@@ -1,5 +1,5 @@
 import { Component, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
-import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrashAlt, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { TaskList } from './TaskList';
 
 @Component({
@@ -12,6 +12,7 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
   //font-awesomes in component
   faEdit = faEdit;
   faTrashAlt = faTrashAlt;
+  faPlusSquare = faPlusSquare;
 
   taskCount: number = 0;
   completeCount: number = 0;
