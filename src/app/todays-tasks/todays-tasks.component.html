@@ -5,7 +5,7 @@
         <input class="form-control" type="text" [(ngModel)]="taskDescription" name="taskDescription" placeholder="Enter a task item"/>
       </div>
       <div class="col-auto">
-        <button class="btn btn-primary" (click)="processTaskInput()"><fa-icon [icon]="faPlusSquare"></fa-icon></button>
+        <button class="btn btn-primary" (click)="processTaskInput()"><fa-icon [icon]="faInputIcon"></fa-icon></button>
       </div>
     </div>
     <div class="row">
@@ -30,7 +30,7 @@
             </td>
             <td>{{ task.name }}</td>
             <td>
-              <fa-icon [icon]="faEdit" title="Edit"></fa-icon>&nbsp;
+              <fa-icon [icon]="faEdit" title="Edit" (click)="updateTask(task)"></fa-icon>&nbsp;
               <fa-icon [icon]="faTrashAlt" title="Delete"></fa-icon>
             </td>
           </tr>

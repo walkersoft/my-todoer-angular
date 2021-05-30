@@ -1,5 +1,6 @@
 import { Component, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { faEdit, faTrashAlt, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { TaskItem } from './TaskItem';
 import { TaskList } from './TaskList';
 
 @Component({
@@ -12,13 +13,15 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
   //font-awesomes in component
   faEdit = faEdit;
   faTrashAlt = faTrashAlt;
-  faPlusSquare = faPlusSquare;
+  faInputIcon = faPlusSquare;
 
   taskDescription: string = "";
   processNew: boolean = true;
 
   taskCount: number = 0;
   completeCount: number = 0;
+  editingTaskIndex: number = -1;
+  editingTask!: TaskItem;
 
   todaysTasks: TaskList = {
     day: new Date(),
@@ -69,9 +72,19 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
 
       this.todaysTasks.items.push(task);
       this.taskDescription = "";
+    } else {
+      this.editingTask.name = this.taskDescription;
+      this.faInputIcon = faPlusSquare;
     }
 
     this.processNew = true;
+  }
+
+  updateTask(task: TaskItem) {
+    this.processNew = false;
+    this.editingTask = task;
+    this.taskDescription = this.editingTask.name;
+    this.faInputIcon = faEdit;
   }
 
 }
