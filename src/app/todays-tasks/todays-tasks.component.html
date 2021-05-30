@@ -19,7 +19,7 @@
           </tr>
         </thead>
         <tbody *ngFor="let task of todaysTasks.items">
-          <tr class="{{task.bleedOverCount == 0 ? 'table-default' : task.bleedOverCount > 1 ? 'table-danger' : 'table-warning'}}">
+          <tr class="{{task.completed ? 'table-success' : task.bleedOverCount == 0 ? 'table-default' : task.bleedOverCount > 1 ? 'table-danger' : 'table-warning'}}">
             <td><span *ngIf="task.bleedOverCount > 0">x{{ task.bleedOverCount }}</span></td>
             <td>
               <input type="checkbox"
