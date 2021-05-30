@@ -49,23 +49,20 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
   processTaskInput(): void {
     if (this.taskDescription === "") return;
 
-    if (this.processNew) {
-      let task = {
-        name: this.taskDescription,
-        completed: false,
-        bleedOverCount: 0
-      }
-      this.todaysTasks.items.push(task);
-      this.taskDescription = "";
-    } else {
-      this.editingTask.name = this.taskDescription;
-      this.faInputIcon = faPlusSquare;
-      this.taskDescription = "";
+    const task = {
+      name: this.taskDescription,
+      completed: false,
+      bleedOverCount: 0
     }
 
-    this.processNew = true;
+    if (this.processNew) {
+      this.todaysTasks.items.push(task);
+    } else {
+      this.editingTask.name = this.taskDescription;
+    }
+
+    this.resetTaskEditing();
     this.updateTaskTallies();
-    console.log(this.todaysTasks.items)
   }
 
   updateTask(task: TaskItem) {
@@ -78,7 +75,15 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
   removeTask() {
     this.todaysTasks.items.splice(this.deletingTaskIndex, 1);
     this.deletingTaskIndex = -1;
+    this.resetTaskEditing();
     this.updateTaskTallies();
+  }
+
+  resetTaskEditing() {
+    this.processNew = true;
+    this.editingTaskIndex = -1;
+    this.taskDescription = "";
+    this.faInputIcon = faPlusSquare;
   }
 
 }
