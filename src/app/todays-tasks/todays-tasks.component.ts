@@ -22,6 +22,7 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
   completeCount: number = 0;
   editingTaskIndex: number = -1;
   editingTask!: TaskItem;
+  deletingTaskIndex: number = -1;
 
   todaysTasks: TaskList = {
     day: new Date(),
@@ -46,9 +47,6 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
   }
 
   processTaskInput(): void {
-    let mode = this.processNew ? "add new" : "edit exising";
-    console.log("processing... " + mode);
-
     if (this.taskDescription === "") return;
 
     if (this.processNew) {
@@ -57,7 +55,6 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
         completed: false,
         bleedOverCount: 0
       }
-
       this.todaysTasks.items.push(task);
       this.taskDescription = "";
     } else {
@@ -67,6 +64,8 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
     }
 
     this.processNew = true;
+    this.updateTaskTallies();
+    console.log(this.todaysTasks.items)
   }
 
   updateTask(task: TaskItem) {
@@ -76,21 +75,10 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
     this.faInputIcon = faEdit;
   }
 
+  removeTask() {
+    this.todaysTasks.items.splice(this.deletingTaskIndex, 1);
+    this.deletingTaskIndex = -1;
+    this.updateTaskTallies();
+  }
+
 }
-
-
-/* {
-  name: "Do the dishes",
-  completed: false,
-  bleedOverCount: 0
-},
-{
-  name: "Watch three Tim Corey vids for TimCo manager project",
-  completed: true,
-  bleedOverCount: 1
-},
-{
-  name: "Work on this app",
-  completed: false,
-  bleedOverCount: 2
-}, */
