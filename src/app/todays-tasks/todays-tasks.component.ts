@@ -14,6 +14,9 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
   faTrashAlt = faTrashAlt;
   faPlusSquare = faPlusSquare;
 
+  taskDescription: string = "";
+  processNew: boolean = true;
+
   taskCount: number = 0;
   completeCount: number = 0;
 
@@ -51,6 +54,24 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
   updateTaskTallies() {
     this.taskCount = this.todaysTasks.items.length;
     this.completeCount = this.todaysTasks.items.filter((t) => t.completed).length;
+  }
+
+  processTaskInput(): void {
+    let mode = this.processNew ? "add new" : "edit exising";
+    console.log("processing... " + mode);
+
+    if (this.processNew) {
+      let task = {
+        name: this.taskDescription,
+        completed: false,
+        bleedOverCount: 0
+      }
+
+      this.todaysTasks.items.push(task);
+      this.taskDescription = "";
+    }
+
+    this.processNew = true;
   }
 
 }
