@@ -25,23 +25,8 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
 
   todaysTasks: TaskList = {
     day: new Date(),
-    name: Date.now.toString(),
+    name: "",
     items: [
-      {
-        name: "Do the dishes",
-        completed: false,
-        bleedOverCount: 0
-      },
-      {
-        name: "Watch three Tim Corey vids for TimCo manager project",
-        completed: true,
-        bleedOverCount: 1
-      },
-      {
-        name: "Work on this app",
-        completed: false,
-        bleedOverCount: 2
-      },
     ]
   };
 
@@ -52,6 +37,7 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.updateTaskTallies();
+    this.todaysTasks.name = "Tasks for: " + this.todaysTasks.day.toLocaleDateString("en-US", {month: "long", day: "numeric", year: 'numeric'});
   }
 
   updateTaskTallies() {
@@ -62,6 +48,8 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
   processTaskInput(): void {
     let mode = this.processNew ? "add new" : "edit exising";
     console.log("processing... " + mode);
+
+    if (this.taskDescription === "") return;
 
     if (this.processNew) {
       let task = {
@@ -75,6 +63,7 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
     } else {
       this.editingTask.name = this.taskDescription;
       this.faInputIcon = faPlusSquare;
+      this.taskDescription = "";
     }
 
     this.processNew = true;
@@ -88,3 +77,20 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
   }
 
 }
+
+
+/* {
+  name: "Do the dishes",
+  completed: false,
+  bleedOverCount: 0
+},
+{
+  name: "Watch three Tim Corey vids for TimCo manager project",
+  completed: true,
+  bleedOverCount: 1
+},
+{
+  name: "Work on this app",
+  completed: false,
+  bleedOverCount: 2
+}, */
