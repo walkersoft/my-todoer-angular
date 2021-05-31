@@ -1,5 +1,6 @@
 import { Component, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { faEdit, faTrashAlt, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { DataStorageService } from '../services/data-storage.service';
 import { TaskItem } from './TaskItem';
 import { TaskList } from './TaskList';
 
@@ -31,13 +32,15 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
     ]
   };
 
-  constructor() { }
+  constructor(private storage: DataStorageService) { }
+
   ngOnChanges(): void {
     this.updateTaskTallies();
   }
 
   ngOnInit(): void {
     this.updateTaskTallies();
+    this.todaysTasks = this.storage.test;
     this.todaysTasks.name = "Tasks for: " + this.todaysTasks.day.toLocaleDateString("en-US", {month: "long", day: "numeric", year: 'numeric'});
   }
 
