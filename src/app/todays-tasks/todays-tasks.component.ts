@@ -1,6 +1,7 @@
 import { Component, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { faEdit, faTrashAlt, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { DataStorageService } from '../services/data-storage.service';
+import { MyTaskList } from './MyTaskList';
 import { TaskItem } from './TaskItem';
 import { TaskList } from './TaskList';
 
@@ -25,14 +26,11 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
   editingTask!: TaskItem;
   deletingTaskIndex: number = -1;
 
-  todaysTasks: TaskList = {
-    day: new Date(),
-    name: "",
-    items: [
-    ]
-  };
+  todaysTasks: MyTaskList;
 
-  constructor(private storage: DataStorageService) { }
+  constructor(private storage: DataStorageService) {
+    this.todaysTasks = storage.getLatestTask();
+  }
 
   ngOnChanges(): void {
     this.updateTaskTallies();
@@ -40,13 +38,14 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.updateTaskTallies();
-    this.todaysTasks = this.storage.test;
+    this.todaysTasks = this.storage.getLatestTask();
     this.todaysTasks.name = "Tasks for: " + this.todaysTasks.day.toLocaleDateString("en-US", {month: "long", day: "numeric", year: 'numeric'});
   }
 
   updateTaskTallies() {
     this.taskCount = this.todaysTasks.items.length;
     this.completeCount = this.todaysTasks.items.filter((t) => t.completed).length;
+    this.storage.saveTaskList(this.todaysTasks);
   }
 
   processTaskInput(): void {
@@ -80,6 +79,7 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
     this.deletingTaskIndex = -1;
     this.resetTaskEditing();
     this.updateTaskTallies();
+    this.storage.saveTaskList(this.todaysTasks);
   }
 
   resetTaskEditing() {
