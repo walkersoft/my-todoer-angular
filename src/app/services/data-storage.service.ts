@@ -32,7 +32,7 @@ export class DataStorageService {
   }
 
   getLatestTask(): TaskList {
-    console.log('current task: ', this.currentTask);
+    //console.log('current task: ', this.currentTask);
     if (this.storeItems.length > 0) {
       this.currentTask = this.storeItems[0];
       if (typeof(this.currentTask.day) == "string") {
@@ -50,7 +50,9 @@ export class DataStorageService {
     if (task.name === this.currentTask.name) {
       this.storeItems[0] = this.currentTask;
     } else {
-      this.storeItems.push(this.currentTask);
+      console.log('task names are not the same');
+      this.storeItems.unshift(task);
+      console.log(this.storeItems);
     }
 
     this.persistStore();

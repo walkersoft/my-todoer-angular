@@ -39,7 +39,9 @@
           </tr>
         </tbody>
         <tfoot>
-          <td colspan="4">Total: {{ taskCount }} | Complete: {{ completeCount }}</td>
+          <td colspan="4">Total: {{ taskCount }} | Complete: {{ completeCount }}
+            <button class="btn btn-sm btn-secondary ml-2" (click)="createNewList()">Create New List</button>
+          </td>
         </tfoot>
       </table>
     </div>

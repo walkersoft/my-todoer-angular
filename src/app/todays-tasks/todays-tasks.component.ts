@@ -89,4 +89,25 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
     this.faInputIcon = faPlusSquare;
   }
 
+  createNewList(): void {
+    let newTask = new MyTaskList();
+
+    if (newTask.name === this.todaysTasks.name) {
+      console.log('Task list for today is already set.');
+    } else {
+      console.log('do new task list creation');
+      this.todaysTasks.items.forEach(t => {
+        let clone = {...t};
+        if (!clone.completed) {
+          clone.bleedOverCount++;
+          newTask.items.push(clone);
+        }
+      });
+      console.log("new task list", newTask);
+      this.storage.saveTaskList(newTask);
+      this.todaysTasks = this.storage.getLatestTask();
+      this.updateTaskTallies();
+    }
+  }
+
 }
