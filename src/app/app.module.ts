@@ -11,7 +11,7 @@ import { ListsComponent } from './lists/lists.component';
 
 const routes: Routes = [
   {path: 'tasks', component: TodaysTasksComponent},
-  {path: 'lists', component: TodaysTasksComponent},
+  {path: 'lists', component: ListsComponent},
   {path: '**', redirectTo: 'tasks'}
 ];
 

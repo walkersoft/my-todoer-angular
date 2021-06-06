@@ -1,1 +1,88 @@
-<p>lists works!</p>
+<div class="container mt-3">
+  <h3>My Checklist</h3>
+
+  <form>
+    <div class="row g-2 align-items-center mb-4">
+      <div class="col-md-6 col-auto">
+        <input class="form-control" type="text" [(ngModel)]="itemDescription" name="itemDescription" placeholder="Enter a task item"/>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-primary" (click)="processItemInput()"><fa-icon [icon]="faInputIcon"></fa-icon></button>
+      </div>
+    </div>
+    <div class="row">
+      <table class="table table-responsive">
+        <thead>
+          <tr>
+            <th scope="col"class="col-auto">Done</th>
+            <th scope="col" class="col-auto">Description</th>
+            <th scope="col"class="col-auto">Actions</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of checklist; let i = index">
+          <tr class="{{item.completed ? 'table-success' : 'table-default'}}">
+            <td class="align-middle">
+              <input type="checkbox"
+                     [checked]="item.completed"
+                     [(ngModel)]="item.completed"
+                     [ngModelOptions]="{standalone: true}"
+                     (ngModelChange)="updateItemTallies()"/>
+            </td>
+            <td class="align-middle">{{ item.name }}</td>
+            <td class="align-middle">
+              <fa-icon class="text-primary" [icon]="faEdit" title="Edit" (click)="updateItem(item)"></fa-icon>&nbsp;
+              <fa-icon class="text-danger" [icon]="faTrashAlt" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" (click)="deletingItemIndex = i"></fa-icon>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <td colspan="4">Total: {{ itemCount }} | Complete: {{ completeCount }}
+            <button class="btn btn-sm btn-secondary ml-2" data-toggle="modal" data-target="#confirmClearModal">Clear List</button>
+          </td>
+        </tfoot>
+      </table>
+    </div>
+  </form>
+</div>
+
+<!-- Delete Confirm Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this item?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="removeItem()" data-dismiss="modal">Delete Item</button>
+        <button type="button" class="btn btn-secondary" (click)="deletingItemIndex = -1" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Clear List Confirm Modal -->
+<div class="modal fade" id="confirmClearModal" tabindex="-1" role="dialog" aria-labelledby="confirmClearModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmClearModalLabel">Confirm Clear</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to clear the entire checklist?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="clearList()" data-dismiss="modal">Yep, clear it!</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
