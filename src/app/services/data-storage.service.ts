@@ -32,7 +32,6 @@ export class DataStorageService {
   }
 
   getLatestTask(): TaskList {
-    //console.log('current task: ', this.currentTask);
     if (this.storeItems.length > 0) {
       this.currentTask = this.storeItems[0];
       if (typeof(this.currentTask.day) == "string") {
@@ -46,43 +45,13 @@ export class DataStorageService {
   }
 
   saveTaskList(task: TaskList): void {
-    //this.currentTask = task;
     if (task.name === this.currentTask.name) {
       this.storeItems[0] = this.currentTask;
     } else {
-      console.log('task names are not the same');
       this.storeItems.unshift(task);
       console.log(this.storeItems);
     }
 
     this.persistStore();
   }
-
-  // test: TaskList = {
-  //   day: new Date(),
-  //   name: "",
-  //   items: [
-  //     {
-  //       name: "Do the dishes",
-  //       completed: false,
-  //       bleedOverCount: 0
-  //     },
-  //     {
-  //       name: "Read a book",
-  //       completed: true,
-  //       bleedOverCount: 1
-  //     },
-  //     {
-  //       name: "Watch 3 Tim Corey videos on TimCo manager",
-  //       completed: false,
-  //       bleedOverCount: 2
-  //     },
-  //     {
-  //       name: "Laundry",
-  //       completed: true,
-  //       bleedOverCount: 0
-  //     },
-  //   ]
-  // }
-
 }
