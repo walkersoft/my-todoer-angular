@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { TodaysTasksComponent } from './todays-tasks/todays-tasks.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { RouterModule, Routes } from '@angular/router';
+import { ListsComponent } from './lists/lists.component';
 
 const routes: Routes = [
   {path: 'tasks', component: TodaysTasksComponent},
@@ -17,7 +18,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    TodaysTasksComponent
+    TodaysTasksComponent,
+    ListsComponent
   ],
   imports: [
     BrowserModule,
