@@ -1,5 +1,6 @@
-import { Component, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChange, SimpleChanges, TemplateRef } from '@angular/core';
 import { faEdit, faTrashAlt, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { DataStorageService } from '../services/data-storage.service';
 import { MyTaskList } from './MyTaskList';
 import { TaskItem } from './TaskItem';
@@ -19,6 +20,7 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
 
   taskDescription: string = "";
   processNew: boolean = true;
+  modalRef!: BsModalRef;
 
   taskCount: number = 0;
   completeCount: number = 0;
@@ -28,7 +30,7 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
 
   todaysTasks: MyTaskList;
 
-  constructor(private storage: DataStorageService) {
+  constructor(private storage: DataStorageService, private modalService: BsModalService) {
     this.todaysTasks = storage.getLatestTask();
   }
 
@@ -89,11 +91,12 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
     this.faInputIcon = faPlusSquare;
   }
 
-  createNewList(): void {
+  createNewList(taskExists: TemplateRef<any>): void {
     let newTask = new MyTaskList();
 
     if (newTask.name === this.todaysTasks.name) {
       console.log('Task list for today is already set.');
+      this.modalRef = this.modalService.show(taskExists);
     } else {
       this.todaysTasks.items.forEach(t => {
         let clone = {...t};
@@ -107,5 +110,4 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
       this.updateTaskTallies();
     }
   }
-
 }

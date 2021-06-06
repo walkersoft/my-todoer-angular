@@ -40,7 +40,7 @@
         </tbody>
         <tfoot>
           <td colspan="4">Total: {{ taskCount }} | Complete: {{ completeCount }}
-            <button class="btn btn-sm btn-secondary ml-2" (click)="createNewList()">Create New List</button>
+            <button class="btn btn-sm btn-secondary ml-2" (click)="createNewList(taskExists)">Create New List</button>
           </td>
         </tfoot>
       </table>
@@ -68,3 +68,22 @@
     </div>
   </div>
 </div>
+
+<!-- Unable to Create New Task List Modal -->
+<ng-template #taskExists>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Cannot Create Task List</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    You probably knew this...but a new task list cannot be created because one already exists for today.
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" aria-label="Close" (click)="modalRef.hide()">
+      Yeah, I knew that!
+    </button>
+  </div>
+</ng-template>
+
