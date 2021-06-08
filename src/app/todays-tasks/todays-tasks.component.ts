@@ -18,12 +18,13 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
   faTrashAlt = faTrashAlt;
   faInputIcon = faPlusSquare;
 
-  taskDescription: string = "";
-  processNew: boolean = true;
 
   //modal reference for new task list/existing task list dialogs
   modalRef!: BsModalRef;
 
+  //misc bits to help with task management
+  taskDescription: string = "";
+  processNew: boolean = true;
   taskCount: number = 0;
   completeCount: number = 0;
   editingTaskIndex: number = -1;
