@@ -20,6 +20,8 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
 
   taskDescription: string = "";
   processNew: boolean = true;
+
+  //modal reference for new task list/existing task list dialogs
   modalRef!: BsModalRef;
 
   taskCount: number = 0;
