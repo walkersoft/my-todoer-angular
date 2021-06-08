@@ -95,7 +95,7 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
   }
 
   createNewList(confirmExistingModal: TemplateRef<any>, confirmNewModal: TemplateRef<any>): void {
-    //Need to look into the ngx-bootstrap modal docs more and see who to reference a modal in the
+    //Need to look into the ngx-bootstrap modal docs more and see how to reference a modal in the
     //template directly into the component.  I don't like passing in multiple modal references, but
     //I don't like having no solution more, so there's that...
     let newTask = new MyTaskList();
@@ -130,5 +130,8 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
     this.storage.saveTaskList(newTask);
     this.todaysTasks = this.storage.getLatestTask();
     this.updateTaskTallies();
+
+    //hide the modal that triggered this task
+    this.modalRef.hide();
   }
 }
