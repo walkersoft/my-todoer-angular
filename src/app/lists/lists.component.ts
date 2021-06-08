@@ -13,6 +13,7 @@ export class ListsComponent implements OnInit {
 
   @Input() itemDescription: string = "";
 
+  //font awesome stuff
   faEdit = faEdit;
   faTrashAlt = faTrashAlt;
   faInputIcon = faPlusSquare;
