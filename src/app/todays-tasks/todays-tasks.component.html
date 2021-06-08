@@ -40,7 +40,8 @@
         </tbody>
         <tfoot>
           <td colspan="4">Total: {{ taskCount }} | Complete: {{ completeCount }}
-            <button class="btn btn-sm btn-secondary ml-2" (click)="createNewList(taskExists)">Create New List</button>
+            <!-- <button class="btn btn-sm btn-secondary ml-2" (click)="createNewList(taskExists)">Create New List</button> -->
+            <button class="btn btn-sm btn-secondary ml-2" (click)="createNewList(confirmExistingModal, confirmNewModal)">Create New List</button>
           </td>
         </tfoot>
       </table>
@@ -70,7 +71,7 @@
 </div>
 
 <!-- Unable to Create New Task List Modal -->
-<ng-template #taskExists>
+<ng-template #confirmExistingModal>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Cannot Create Task List</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
@@ -78,7 +79,7 @@
     </button>
   </div>
   <div class="modal-body">
-    You probably knew this...but a new task list cannot be created because one already exists for today.
+    A new task list cannot be created because one already exists for today.
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" aria-label="Close" (click)="modalRef.hide()">
@@ -87,3 +88,23 @@
   </div>
 </ng-template>
 
+<!-- Confirm Create New Task List Modal -->
+<ng-template #confirmNewModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Confirm New List</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to create a new task list? Incomplete tasks from this list will be carried over and marked as missed.
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" aria-label="Close" (click)="confirmNewList()">
+      Create New List
+    </button>
+    <button type="button" class="btn btn-secondary" aria-label="Close" (click)="modalRef.hide()">
+      Cancel
+    </button>
+  </div>
+</ng-template>

@@ -91,23 +91,41 @@ export class TodaysTasksComponent implements OnInit, OnChanges {
     this.faInputIcon = faPlusSquare;
   }
 
-  createNewList(taskExists: TemplateRef<any>): void {
+  createNewList(confirmExistingModal: TemplateRef<any>, confirmNewModal: TemplateRef<any>): void {
+    //Need to look into the ngx-bootstrap modal docs more and see who to reference a modal in the
+    //template directly into the component.  I don't like passing in multiple modal references, but
+    //I don't like having no solution more, so there's that...
     let newTask = new MyTaskList();
 
     if (newTask.name === this.todaysTasks.name) {
-      console.log('Task list for today is already set.');
-      this.modalRef = this.modalService.show(taskExists);
+      this.modalRef = this.modalService.show(confirmExistingModal);
     } else {
-      this.todaysTasks.items.forEach(t => {
-        let clone = {...t};
-        if (!clone.completed) {
-          clone.bleedOverCount++;
-          newTask.items.push(clone);
-        }
-      });
-      this.storage.saveTaskList(newTask);
-      this.todaysTasks = this.storage.getLatestTask();
-      this.updateTaskTallies();
+      this.modalRef = this.modalService.show(confirmNewModal);
     }
+  }
+
+  confirmNewList(): void {
+    let newTask = new MyTaskList();
+
+    //hopefully this bit never runs...
+    if (newTask.name === this.todaysTasks.name) {
+      console.error("ERROR: A list for today already exists. (This should've been caught before trying to create a new list!)");
+      return;
+    }
+
+    //iterate over current tasks looking for incomplete tasks and updating their miss
+    //counters before pushing them into the next days tasks
+    this.todaysTasks.items.forEach(t => {
+      let clone = {...t};
+      if (!clone.completed) {
+        clone.bleedOverCount++;
+        newTask.items.push(clone);
+      }
+    });
+
+    //update the data store and component data
+    this.storage.saveTaskList(newTask);
+    this.todaysTasks = this.storage.getLatestTask();
+    this.updateTaskTallies();
   }
 }
